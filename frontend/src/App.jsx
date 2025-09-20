@@ -66,18 +66,31 @@ const NavigationBar = () => {
           alt="ScrollCast Icon"
           src="/favicon.ico"
         />
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} fontWeight={'900'}>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1 }}
+          fontWeight={"900"}
+        >
           ScrollCast
         </Typography>
 
         {isLoggedIn ? (
           // Show these when user is logged in
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-            <Stack direction={'column'}>
-              <Typography variant="subtitle1" sx={{ mr: 2 }} fontWeight={'bold'}>
+            <Stack direction={"column"}>
+              <Typography
+                variant={{ md: "subtitle2", xs: "body2" }}
+                sx={{ mr: 2 }}
+                fontWeight={"bold"}
+              >
                 Welcome {userDetails.role}, {userDetails.name}
               </Typography>
-              <Typography variant="subtitle2" sx={{ mr: 2 }} fontWeight={'bold'}>
+              <Typography
+                variant={{ md: "subtitle2", sm: "caption" }}
+                sx={{ mr: 2 }}
+                fontWeight={"bold"}
+              >
                 {userDetails.email}
               </Typography>
             </Stack>
