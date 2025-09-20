@@ -22,6 +22,16 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  TextField,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  InputLabel,
+  Select,
+  MenuItem,
+  OutlinedInput,
 } from "@mui/material";
 import {
   Refresh as RefreshIcon,
@@ -30,12 +40,16 @@ import {
   Visibility as PreviewIcon,
   ExpandMore as ExpandMoreIcon,
   Close as CloseIcon,
+  Add as AddIcon,
+  Analytics as AnalyticsIcon,
 } from "@mui/icons-material";
 import { getUserDetails } from "../utils/getUserDetails";
 import axiosInstance from "../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const userDetails = getUserDetails();
+  const navigate = useNavigate();
   const [feedSources, setFeedSources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -45,6 +59,22 @@ const AdminDashboard = () => {
     data: null,
     error: null,
     feedUrl: "",
+  });
+
+  const [addSourceDialog, setAddSourceDialog] = useState({
+    open: false,
+    loading: false,
+    error: null,
+    preview: {
+      loading: false,
+      data: null,
+      error: null,
+    },
+    formData: {
+      name: "",
+      link: "",
+      properties: [],
+    },
   });
 
   const fetchFeedSources = async () => {
@@ -108,6 +138,104 @@ const AdminDashboard = () => {
     });
   };
 
+  const handleAddSourcePreview = async () => {
+    const { link } = addSourceDialog.formData;
+
+    if (!link) {
+      setAddSourceDialog((prev) => ({
+        ...prev,
+        preview: { ...prev.preview, error: "Please enter a feed URL first" },
+      }));
+      return;
+    }
+
+    setAddSourceDialog((prev) => ({
+      ...prev,
+      preview: { loading: true, data: null, error: null },
+    }));
+
+    try {
+      const response = await axiosInstance.get(
+        `/admin/feed/preview?link=${encodeURIComponent(link)}`
+      );
+      setAddSourceDialog((prev) => ({
+        ...prev,
+        preview: {
+          loading: false,
+          data: response.data,
+          error: null,
+        },
+      }));
+    } catch (err) {
+      console.error("Error fetching feed preview:", err);
+      setAddSourceDialog((prev) => ({
+        ...prev,
+        preview: {
+          loading: false,
+          data: null,
+          error:
+            "Failed to load feed preview. Please check the URL and try again.",
+        },
+      }));
+    }
+  };
+
+  const handleAddSourceSubmit = async () => {
+    const { name, link, properties } = addSourceDialog.formData;
+
+    // Validation
+    if (!name || !link || properties.length === 0) {
+      setAddSourceDialog((prev) => ({
+        ...prev,
+        error: "Please fill in all fields and select at least one property",
+      }));
+      return;
+    }
+
+    setAddSourceDialog((prev) => ({
+      ...prev,
+      loading: true,
+      error: null,
+    }));
+
+    try {
+      await axiosInstance.post("/admin/feed/current", {
+        name,
+        link,
+        properties,
+      });
+
+      // Close dialog and reset form
+      setAddSourceDialog({
+        open: false,
+        loading: false,
+        error: null,
+        preview: {
+          loading: false,
+          data: null,
+          error: null,
+        },
+        formData: {
+          name: "",
+          link: "",
+          properties: [],
+        },
+      });
+
+      // Refresh the feed sources list
+      fetchFeedSources();
+    } catch (err) {
+      console.error("Error adding feed source:", err);
+      setAddSourceDialog((prev) => ({
+        ...prev,
+        loading: false,
+        error:
+          err.response?.data?.message ||
+          "Failed to add feed source. Please try again.",
+      }));
+    }
+  };
+
   const handleDelete = async (feedId) => {
     if (window.confirm("Are you sure you want to delete this feed source?")) {
       try {
@@ -136,12 +264,29 @@ const AdminDashboard = () => {
       <Stack direction={"column"} spacing={3} sx={{ p: 3 }}>
         {/* Admin Header */}
         <Box>
-          <Typography variant="h2" gutterBottom>
-            Hello {userDetails.role}, {userDetails.name}
-          </Typography>
-          <Typography variant="h6" color="text.secondary">
-            {userDetails.email}
-          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="flex-start"
+          >
+            <Box>
+              <Typography variant="h2" gutterBottom>
+                Hello {userDetails.role}, {userDetails.name}
+              </Typography>
+              <Typography variant="h6" color="text.secondary">
+                {userDetails.email}
+              </Typography>
+            </Box>
+            <Button
+              startIcon={<AnalyticsIcon />}
+              onClick={() => navigate("/admin/analytics")}
+              variant="contained"
+              color="secondary"
+              size="large"
+            >
+              View Analytics
+            </Button>
+          </Stack>
         </Box>
 
         <Divider />
@@ -155,14 +300,26 @@ const AdminDashboard = () => {
             mb={2}
           >
             <Typography variant="h4">Feed Sources Management</Typography>
-            <Button
-              startIcon={<RefreshIcon />}
-              onClick={handleRefresh}
-              variant="outlined"
-              disabled={loading}
-            >
-              Refresh
-            </Button>
+            <Stack direction="row" spacing={1}>
+              <Button
+                startIcon={<AddIcon />}
+                onClick={() =>
+                  setAddSourceDialog((prev) => ({ ...prev, open: true }))
+                }
+                variant="contained"
+                color="primary"
+              >
+                Add RSS Source
+              </Button>
+              <Button
+                startIcon={<RefreshIcon />}
+                onClick={handleRefresh}
+                variant="outlined"
+                disabled={loading}
+              >
+                Refresh
+              </Button>
+            </Stack>
           </Stack>
 
           {loading && (
@@ -522,6 +679,235 @@ const AdminDashboard = () => {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClosePreview}>Close</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Add RSS Source Dialog */}
+        <Dialog
+          open={addSourceDialog.open}
+          onClose={() =>
+            setAddSourceDialog((prev) => ({ ...prev, open: false }))
+          }
+          maxWidth="md"
+          fullWidth
+        >
+          <DialogTitle>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography variant="h6">Add RSS Source</Typography>
+              <IconButton
+                onClick={() =>
+                  setAddSourceDialog((prev) => ({ ...prev, open: false }))
+                }
+              >
+                <CloseIcon />
+              </IconButton>
+            </Stack>
+          </DialogTitle>
+          <DialogContent>
+            <Stack spacing={3} sx={{ mt: 1 }}>
+              {/* Error Alert */}
+              {addSourceDialog.error && (
+                <Alert severity="error">{addSourceDialog.error}</Alert>
+              )}
+
+              {/* Form Fields */}
+              <TextField
+                label="Source Name"
+                placeholder="e.g., IGN"
+                value={addSourceDialog.formData.name}
+                onChange={(e) =>
+                  setAddSourceDialog((prev) => ({
+                    ...prev,
+                    formData: { ...prev.formData, name: e.target.value },
+                  }))
+                }
+                fullWidth
+                required
+              />
+
+              <TextField
+                label="RSS Feed URL"
+                placeholder="e.g., https://www.ign.com/rss/articles/feed"
+                value={addSourceDialog.formData.link}
+                onChange={(e) =>
+                  setAddSourceDialog((prev) => ({
+                    ...prev,
+                    formData: { ...prev.formData, link: e.target.value },
+                  }))
+                }
+                fullWidth
+                required
+                type="url"
+              />
+
+              {/* Preview Button and Results */}
+              <Box>
+                <Button
+                  variant="outlined"
+                  onClick={() => handleAddSourcePreview()}
+                  disabled={
+                    !addSourceDialog.formData.link ||
+                    addSourceDialog.preview.loading
+                  }
+                  startIcon={
+                    addSourceDialog.preview.loading ? (
+                      <CircularProgress size={16} />
+                    ) : (
+                      <PreviewIcon />
+                    )
+                  }
+                >
+                  {addSourceDialog.preview.loading
+                    ? "Loading Preview..."
+                    : "Preview Feed"}
+                </Button>
+              </Box>
+
+              {/* Preview Error */}
+              {addSourceDialog.preview.error && (
+                <Alert severity="error">{addSourceDialog.preview.error}</Alert>
+              )}
+
+              {/* Preview Results and Properties Selection */}
+              {addSourceDialog.preview.data && (
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      Feed Preview & Property Selection
+                    </Typography>
+
+                    {/* Feed Info */}
+                    <Stack spacing={2} sx={{ mb: 3 }}>
+                      <Box>
+                        <Typography variant="subtitle2" color="primary">
+                          Title:{" "}
+                          {addSourceDialog.preview.data.feedTitle || "No title"}
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Typography variant="subtitle2" color="primary">
+                          Items found:{" "}
+                          {addSourceDialog.preview.data.items?.length || 0}
+                        </Typography>
+                      </Box>
+                    </Stack>
+
+                    {/* Properties Selection */}
+                    <FormControl fullWidth>
+                      <FormLabel component="legend">
+                        Select Properties to Include
+                      </FormLabel>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ mb: 2 }}
+                      >
+                        Choose which properties from the feed items you want to
+                        include:
+                      </Typography>
+                      <FormGroup>
+                        {addSourceDialog.preview.data.availableKeys?.map(
+                          (property) => (
+                            <FormControlLabel
+                              key={property}
+                              control={
+                                <Checkbox
+                                  checked={addSourceDialog.formData.properties.includes(
+                                    property
+                                  )}
+                                  onChange={(e) => {
+                                    const checked = e.target.checked;
+                                    setAddSourceDialog((prev) => ({
+                                      ...prev,
+                                      formData: {
+                                        ...prev.formData,
+                                        properties: checked
+                                          ? [
+                                              ...prev.formData.properties,
+                                              property,
+                                            ]
+                                          : prev.formData.properties.filter(
+                                              (p) => p !== property
+                                            ),
+                                      },
+                                    }));
+                                  }}
+                                />
+                              }
+                              label={property}
+                            />
+                          )
+                        )}
+                      </FormGroup>
+                    </FormControl>
+
+                    {/* Sample Item Preview */}
+                    {addSourceDialog.preview.data.items &&
+                      addSourceDialog.preview.data.items.length > 0 && (
+                        <Box sx={{ mt: 3 }}>
+                          <Typography variant="subtitle2" gutterBottom>
+                            Sample Item:
+                          </Typography>
+                          <Card variant="outlined" sx={{ p: 2 }}>
+                            <Stack spacing={1}>
+                              {Object.entries(
+                                addSourceDialog.preview.data.items[0]
+                              ).map(([key, value]) => (
+                                <Box key={key}>
+                                  <Typography
+                                    variant="caption"
+                                    color="primary"
+                                    sx={{ fontWeight: "bold" }}
+                                  >
+                                    {key}:
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    sx={{ ml: 1, wordBreak: "break-word" }}
+                                  >
+                                    {typeof value === "string" &&
+                                    value.length > 100
+                                      ? `${value.substring(0, 100)}...`
+                                      : value || "(empty)"}
+                                  </Typography>
+                                </Box>
+                              ))}
+                            </Stack>
+                          </Card>
+                        </Box>
+                      )}
+                  </CardContent>
+                </Card>
+              )}
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() =>
+                setAddSourceDialog((prev) => ({ ...prev, open: false }))
+              }
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => handleAddSourceSubmit()}
+              variant="contained"
+              disabled={
+                !addSourceDialog.formData.name ||
+                !addSourceDialog.formData.link ||
+                addSourceDialog.formData.properties.length === 0 ||
+                addSourceDialog.loading
+              }
+              startIcon={
+                addSourceDialog.loading ? <CircularProgress size={16} /> : null
+              }
+            >
+              {addSourceDialog.loading ? "Adding..." : "Add Source"}
+            </Button>
           </DialogActions>
         </Dialog>
       </Stack>

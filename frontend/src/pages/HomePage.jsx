@@ -274,6 +274,36 @@ const ArticleDialog = ({ article, open, onClose, isMobile }) => (
           )}
         </Box>
       )}
+      {article?.guid && (
+        <Box sx={{ mt: 2 }}>
+          <Link
+            href={article.guid}
+            target="_blank"
+            rel="noopener noreferrer"
+            underline="hover"
+            sx={{
+              fontSize: { xs: "0.9rem", sm: "1rem" },
+            }}
+          >
+            Read full article
+          </Link>
+          {!isMobile && (
+            <Box sx={{ mt: 2, width: "100%", height: "400px" }}>
+              <iframe
+                src={article.guid}
+                title={article.title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                }}
+                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              />
+            </Box>
+          )}
+        </Box>
+      )}
     </DialogContent>
     <DialogActions sx={{ p: { xs: 2, sm: 3 } }}>
       <Button

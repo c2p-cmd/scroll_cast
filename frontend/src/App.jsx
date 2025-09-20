@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import HomePage from "./pages/HomePage";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminAnalytics from "./pages/AdminAnalytics";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -46,11 +47,20 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" />} />
         <Route
           path="/admin/dashboard"
           element={
             <AdminProtectedRoute>
               <AdminDashboard />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/analytics"
+          element={
+            <AdminProtectedRoute>
+              <AdminAnalytics />
             </AdminProtectedRoute>
           }
         />
