@@ -136,8 +136,19 @@ const LoginPage = () => {
               title={"Error"}
               description={alertMessage}
               onClose={() => {
+                setShowAlert(false);
                 setAlertMessage("");
               }}
+              buttons={[
+                {
+                  title: "Okay",
+                  autoFocus: true,
+                  onClick: () => {
+                    setShowAlert(false);
+                    setAlertMessage("");
+                  },
+                },
+              ]}
             />
           </Stack>
         </Box>
