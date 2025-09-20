@@ -10,7 +10,7 @@ if (!process.env.JWT_SECRET) {
 
 jwtMiddleware.use((req, res, next) => {
   const bearerToken = req.headers["authorization"]?.split(" ");
-  console.log("JWT Middleware", bearerToken);
+  // console.log("JWT Middleware", bearerToken);
 
   if (!bearerToken || bearerToken[0] !== "Bearer") {
     return res.status(401).json({ message: "Unauthorized" });

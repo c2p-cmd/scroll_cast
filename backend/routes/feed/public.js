@@ -7,18 +7,29 @@ const makeFeed = rss.makeFeed;
 const publicFeedRouter = express.Router();
 
 publicFeedRouter.get("/current", async (req, res) => {
-  const feedSources = await db.feedSource.findMany();
+  const feedSources = await db.feedSource.findMany({
+    include: {
+      favouritedBy: true,
+    },
+  });
+  // console.log(feedSources.map((a) => a.favouritedBy), req.user.userId);
   if (req.user.role !== "Admin") {
-    return res.json(
-      feedSources.map((source) => ({
-        id: source.id,
-        name: source.name,
-        properties: source.properties,
-        createdAt: source.createdAt,
-      }))
-    );
+    const sources = feedSources.map((source) => ({
+      id: source.id,
+      name: source.name,
+      properties: source.properties,
+      createdAt: source.createdAt,
+      favourite: source.favouritedBy.some((user) => user.id === req.user.userId),
+    }));
+    sources.sort((a, b) => b.favourite - a.favourite);
+    return res.json(sources);
   }
-  return res.json(feedSources);
+  const sources = feedSources.map((source) => ({
+    ...source,
+    favourite: source.favouritedBy.some((user) => user.id === req.user.userId),
+  }));
+  sources.sort((a, b) => b.favourite - a.favourite);
+  return res.json(sources);
 });
 
 publicFeedRouter.get("/view", async (req, res) => {
