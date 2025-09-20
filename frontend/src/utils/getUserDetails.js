@@ -67,6 +67,8 @@ const getUserDetails = () => {
       console.log("Token expires soon, consider refreshing");
     }
 
+    userDetails.role = decodeToken(userDetails.token).role;
+
     return userDetails;
   } catch (error) {
     console.error("Error parsing user details:", error);

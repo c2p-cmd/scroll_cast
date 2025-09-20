@@ -75,7 +75,7 @@ const NavigationBar = () => {
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <Stack direction={'column'}>
               <Typography variant="subtitle1" sx={{ mr: 2 }} fontWeight={'bold'}>
-                Welcome, {userDetails.name}
+                Welcome {userDetails.role}, {userDetails.name}
               </Typography>
               <Typography variant="subtitle2" sx={{ mr: 2 }} fontWeight={'bold'}>
                 {userDetails.email}
