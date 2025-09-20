@@ -9,9 +9,21 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { Button, Box, Typography, AppBar, Toolbar, Stack } from "@mui/material";
+import {
+  Button,
+  Box,
+  Typography,
+  AppBar,
+  Toolbar,
+  Stack,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import HomePage from "./pages/HomePage";
+import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import { getUserDetails } from "./utils/getUserDetails";
 
@@ -34,6 +46,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboard />
+            </AdminProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
@@ -45,6 +65,9 @@ const NavigationBar = () => {
   const userDetails = getUserDetails();
   const isLoggedIn = !!userDetails;
   const location = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const isLoginPath = () => {
     return location.pathname.toLowerCase() === "/login";
@@ -58,52 +81,107 @@ const NavigationBar = () => {
   };
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: "#1976d2" }}>
-      <Toolbar>
-        <Box
-          component="img"
-          sx={{ height: 35, mr: 1 }}
-          alt="ScrollCast Icon"
-          src="/favicon.ico"
-        />
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{ flexGrow: 1 }}
-          fontWeight={"900"}
+    <AppBar
+      position="sticky"
+      sx={{
+        backgroundColor: "#1976d2",
+        minHeight: isMobile ? 56 : 64,
+      }}
+    >
+      <Toolbar sx={{ minHeight: isMobile ? 56 : 64 }}>
+        <Button
+          color="inherit"
+          component={Link}
+          to="/home"
+          startIcon={
+            <Box
+              component="img"
+              sx={{ height: 24 }}
+              alt="ScrollCast Icon"
+              src="/favicon.ico"
+            />
+          }
+          sx={{
+            textTransform: "none",
+            fontSize: isMobile ? "1rem" : "1.25rem",
+            fontWeight: 900,
+            mr: isMobile ? 0.5 : 2,
+            minWidth: "auto",
+          }}
         >
-          ScrollCast
-        </Typography>
+          {isMobile ? "" : "ScrollCast"}
+        </Button>
+        <Box sx={{ flexGrow: 1 }} />
 
         {isLoggedIn ? (
           // Show these when user is logged in
-          <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-            <Stack direction={"column"}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: isMobile ? 0.5 : 1,
+              alignItems: "center",
+              flexWrap: "wrap",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Stack direction={"column"} sx={{ minWidth: 0 }}>
               <Typography
-                variant={{ md: "subtitle2", xs: "body2" }}
-                sx={{ mr: 2 }}
+                variant={
+                  isSmallMobile ? "caption" : isMobile ? "caption" : "subtitle1"
+                }
+                sx={{
+                  mr: isMobile ? 1 : 2,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
                 fontWeight={"bold"}
               >
                 Welcome {userDetails.role}, {userDetails.name}
               </Typography>
               <Typography
-                variant={{ md: "subtitle2", sm: "caption" }}
-                sx={{ mr: 2 }}
+                variant={
+                  isSmallMobile ? "caption" : isMobile ? "caption" : "subtitle2"
+                }
+                sx={{
+                  mr: isMobile ? 1 : 2,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
                 fontWeight={"bold"}
               >
                 {userDetails.email}
               </Typography>
             </Stack>
-            <Button color="inherit" component={Link} to="/home">
-              Home
-            </Button>
+            {userDetails.role.toLowerCase() === "admin" && (
+              <Button color="inherit" component={Link} to="/admin/dashboard">
+                <Typography
+                  variant={
+                    isSmallMobile
+                      ? "caption"
+                      : isMobile
+                      ? "caption"
+                      : "subtitle2"
+                  }
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Admin Panel
+                </Typography>
+              </Button>
+            )}
             <Button
               color="inherit"
               onClick={handleLogout}
               variant="outlined"
+              startIcon={<ExitToAppIcon />}
               sx={{ borderColor: "white", color: "white" }}
             >
-              Logout
+              {isMobile ? "" : "Logout"}
             </Button>
           </Box>
         ) : (
