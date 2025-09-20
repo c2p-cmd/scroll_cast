@@ -13,6 +13,7 @@ publicFeedRouter.get("/current", async (req, res) => {
       feedSources.map((source) => ({
         id: source.id,
         name: source.name,
+        properties: source.properties,
         createdAt: source.createdAt,
       }))
     );
