@@ -23,9 +23,27 @@ jwtMiddleware.use((req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
+      // Provide more specific error messages
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).json({
+          message: "Token expired",
+          expired: true,
+          expiredAt: err.expiredAt,
+        });
+      } else if (err.name === "JsonWebTokenError") {
+        return res.status(401).json({
+          message: "Invalid token",
+          invalid: true,
+        });
+      }
       return res.status(401).json({ message: "Unauthorized" });
     }
+
     req.user = decoded;
+
+    // Add token expiry info to response headers for client use
+    res.set("X-Token-Expires", decoded.exp);
+
     if (decoded.role !== "Admin" && req.url.includes("/admin")) {
       return res.status(403).json({ message: "Forbidden" });
     }
