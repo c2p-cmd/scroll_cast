@@ -19,13 +19,23 @@ publicFeedRouter.get("/current", async (req, res) => {
       name: source.name,
       properties: source.properties,
       createdAt: source.createdAt,
-      favourite: source.favouritedBy.some((user) => user.id === req.user.userId),
+      favourite: source.favouritedBy.some(
+        (user) => user.id === req.user.userId
+      ),
     }));
     sources.sort((a, b) => b.favourite - a.favourite);
     return res.json(sources);
   }
+  // Admin view with full details including favouritedBy users
   const sources = feedSources.map((source) => ({
-    ...source,
+    id: source.id,
+    name: source.name,
+    link: source.link,
+    properties: source.properties,
+    createdAt: source.createdAt,
+    updatedAt: source.updatedAt,
+    createdBy: source.createdBy,
+    favouritedBy: source.favouritedBy,
     favourite: source.favouritedBy.some((user) => user.id === req.user.userId),
   }));
   sources.sort((a, b) => b.favourite - a.favourite);
