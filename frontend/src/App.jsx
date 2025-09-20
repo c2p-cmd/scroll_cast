@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { Button, Box, Typography, AppBar, Toolbar } from "@mui/material";
+import { Button, Box, Typography, AppBar, Toolbar, Stack } from "@mui/material";
 import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -58,18 +58,29 @@ const NavigationBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#1976d2" }}>
+    <AppBar position="sticky" sx={{ backgroundColor: "#1976d2" }}>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Box
+          component="img"
+          sx={{ height: 35, mr: 1 }}
+          alt="ScrollCast Icon"
+          src="/favicon.ico"
+        />
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} fontWeight={'900'}>
           ScrollCast
         </Typography>
 
         {isLoggedIn ? (
           // Show these when user is logged in
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-            <Typography variant="body2" sx={{ mr: 2 }}>
-              Welcome, {userDetails.name}
-            </Typography>
+            <Stack direction={'column'}>
+              <Typography variant="subtitle1" sx={{ mr: 2 }} fontWeight={'bold'}>
+                Welcome, {userDetails.name}
+              </Typography>
+              <Typography variant="subtitle2" sx={{ mr: 2 }} fontWeight={'bold'}>
+                {userDetails.email}
+              </Typography>
+            </Stack>
             <Button color="inherit" component={Link} to="/home">
               Home
             </Button>
