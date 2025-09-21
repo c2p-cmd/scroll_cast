@@ -12,6 +12,64 @@ ScrollCast is a comprehensive web application that allows users to aggregate RSS
 **Admin View:**
 <img width="1510" height="804" alt="Screenshot 2025-09-21 at 16 51 29" src="https://github.com/user-attachments/assets/7e0196e1-f178-4313-8d47-34ad7bf43b9e" />
 
+---
+
+## 🎥 Video Showcase
+
+Watch the complete application demonstration showcasing all features:
+
+[![ScrollCast Video Demo](https://img.youtube.com/vi/UjMPYivrAcI/maxresdefault.jpg)](https://youtu.be/UjMPYivrAcI)
+
+**[🎬 View Full Demo on YouTube](https://youtu.be/UjMPYivrAcI)**
+
+The video demonstrates:
+
+- User authentication and registration flow
+- RSS feed browsing and management
+- Favorites system functionality
+- Weather dashboard with interactive charts
+- Admin panel and feed source management
+- Real-time data updates and user interface
+
+---
+
+## 📚 Assignment Overview
+
+This project was developed as a comprehensive full-stack web application demonstrating modern software development practices and technologies. The application showcases:
+
+### **Core Learning Objectives Addressed**
+
+- **Full-stack Development**: Complete web application with separate frontend and backend
+- **RESTful API Design**: Well-structured API endpoints following REST principles
+- **Database Design & ORM**: Relational database modeling with Prisma ORM
+- **User Authentication**: Secure JWT-based authentication and authorization
+- **Frontend Framework Mastery**: Modern React development with hooks and routing
+- **Third-party Integration**: RSS feed parsing and weather data integration
+- **Code Quality**: Testing, documentation, and best practices implementation
+
+### **Technical Competencies Demonstrated**
+
+- ✅ **Backend API Development** with Express.js and Node.js
+- ✅ **Frontend UI Development** with React and Material-UI
+- ✅ **Database Schema Design** and migration management
+- ✅ **Authentication & Security** implementation
+- ✅ **Real-time Data Processing** with RSS feeds
+- ✅ **Data Visualization** using Plotly.js
+- ✅ **Code Testing** and quality assurance
+- ✅ **Project Documentation** and deployment preparation
+
+### **Industry-Standard Technologies**
+
+The project utilizes cutting-edge technologies and follows modern development practices, including:
+
+- **Bun Runtime**: Next-generation JavaScript runtime for superior performance
+- **React 19**: Latest React version with concurrent features
+- **Prisma ORM**: Type-safe database access with automated migrations
+- **JWT Authentication**: Industry-standard stateless authentication
+- **Material-UI**: Production-ready component library
+- **Vite**: Lightning-fast development and build tooling
+
+---
 
 ## ✨ Features
 
@@ -56,7 +114,34 @@ ScrollCast/
 └── generated/        # Prisma client
 ```
 
-## 🛠️ Tech Stack
+## � Technical Challenges & Solutions
+
+### Challenge 1: RSS Feed Parsing Reliability
+
+**Problem**: Different RSS feeds have varying structures and may contain malformed XML or missing fields.
+**Solution**: Implemented robust error handling with rss-parser library and fallback mechanisms for missing fields. Added validation layers to ensure consistent data structure regardless of source feed quality.
+
+### Challenge 2: Real-time Data Updates
+
+**Problem**: Users expect fresh RSS content without manual refresh, but frequent API calls can impact performance.
+**Solution**: Implemented efficient caching strategy with time-based expiration and optimized API calls to balance performance with data freshness. Used conditional rendering to show loading states during updates.
+
+### Challenge 3: Role-based Access Control
+
+**Problem**: Different user types (User vs Admin) need different levels of access to features and data.
+**Solution**: Created middleware-based authentication system with JWT tokens and role-based route protection. Implemented both backend API guards and frontend route protection components.
+
+### Challenge 4: Weather Data Integration
+
+**Problem**: Weather APIs have rate limits and varying response formats across different providers.
+**Solution**: Designed a unified weather service layer that handles multiple data sources and implements graceful degradation when services are unavailable. Added comprehensive error handling for API failures.
+
+### Challenge 5: Database Performance
+
+**Problem**: Complex queries involving user favorites and feed relationships could slow down response times.
+**Solution**: Optimized database queries using Prisma's include/select patterns and implemented proper indexing. Used database connection pooling for better resource management.
+
+## �🛠️ Tech Stack
 
 ### Backend
 
@@ -133,15 +218,34 @@ echo 'VITE_BACKEND_URL="http://localhost:4000"' >> .env
 
 4. **Database setup**:
 
+> **Note**: The SQLite database (`prisma/my.db`) is already included in the repository and comes pre-populated with cities data and sample feed sources. You can start using the application immediately after generating the Prisma client.
+
 ```bash
-# Generate Prisma client
+# Generate Prisma client (required)
 bun prisma generate
 
-# Run migrations
-bun prisma migrate deploy
+# Database is already set up with migrations applied and data populated
+# No additional setup needed - you're ready to go!
 
-# (Optional) Populate cities data
+# (Optional) If you want to reset and repopulate cities data
 bun run backend/utils/populate_cities.js
+```
+
+User Details
+
+```json
+[
+    // admin details
+    {
+        "email": "admin2@live.com",
+        "password": "admin123",
+    },
+    // user details (non-admin)
+    {
+        "email": "react_tester@123.co.uk",
+        "password": "ReactTester"
+    }
+]
 ```
 
 5. **Start the application**:
@@ -770,6 +874,55 @@ scroll_cast/
 ├── cities.txt                 # City data for seeding
 └── README.md                  # This file
 ```
+
+## 🎓 Key Learnings & Reflections
+
+### **Technical Skills Developed**
+
+- **Modern JavaScript & ES6+**: Enhanced understanding of async/await patterns, destructuring, and modular programming
+- **Database Design & ORM**: Practical experience with relational database modeling, migrations, and query optimization using Prisma
+- **API Security**: Implemented industry-standard authentication patterns including JWT tokens, password hashing, and role-based authorization
+- **React Development**: Advanced component architecture, hooks, state management, and routing with React Router
+- **Full-stack Integration**: Seamless connection between frontend and backend with proper error handling and data flow
+
+### **Best Practices Applied**
+
+- **Code Organization**: Implemented modular structure with clear separation of concerns between frontend, backend, and database layers
+- **Documentation**: Comprehensive API documentation with examples, inline code comments, and project setup instructions
+- **Error Handling**: Graceful error handling throughout the application with user-friendly error messages and fallback mechanisms
+- **Security**: Input validation, password hashing with bcrypt, JWT token security, and protection against common vulnerabilities
+- **Testing**: Backend unit testing for critical functions and API endpoints validation
+
+### **Development Methodology**
+
+- **Iterative Development**: Started with core features (authentication, basic CRUD) then progressively added advanced functionality
+- **API-First Approach**: Designed and tested backend endpoints before implementing frontend features
+- **User Experience Focus**: Implemented responsive design, loading states, and intuitive navigation for both user and admin interfaces
+- **Performance Optimization**: Database query optimization, efficient caching strategies, and minimized API calls
+
+### **Industry Standards & Tools**
+
+- **Modern Runtime**: Leveraged Bun for faster development workflow and improved performance
+- **Type Safety**: Utilized Prisma for type-safe database operations and reduced runtime errors
+- **Build Optimization**: Implemented Vite for fast development builds and optimized production bundles
+- **Component Libraries**: Used Material-UI for consistent, accessible, and production-ready user interfaces
+
+### **Problem-Solving Approach**
+
+- **RSS Feed Challenges**: Developed robust parsing strategies to handle inconsistent feed formats and malformed data
+- **Real-time Updates**: Balanced performance with data freshness through intelligent caching and update strategies
+- **Authentication Flow**: Created secure, stateless authentication system supporting multiple user roles
+- **Data Visualization**: Integrated Plotly.js for interactive weather charts with responsive design
+
+### **Future Enhancement Opportunities**
+
+- **Scalability**: Consider implementing Redis for distributed caching and session management
+- **Testing Coverage**: Expand to include frontend component testing and end-to-end testing
+- **Deployment**: Add Docker containerization and CI/CD pipeline for automated deployment
+- **Performance**: Implement pagination for large datasets and lazy loading for improved user experience
+- **Mobile**: Develop React Native mobile application or Progressive Web App (PWA) capabilities
+
+---
 
 ## 📄 License
 
