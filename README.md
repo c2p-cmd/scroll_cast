@@ -4,7 +4,12 @@
 
 ScrollCast is a comprehensive web application that allows users to aggregate RSS feeds, manage news sources, check weather information, and provides administrative capabilities for content management. Built with modern technologies for performance, scalability, and user experience.
 
+---
+**User View:**
 ![ScrollCast Demo](https://raw.githubusercontent.com/c2p-cmd/scroll_cast/master/Screenshot%202025-09-21%20at%2015.58.30.png)
+
+---
+**Admin View:**
 <img width="1510" height="804" alt="Screenshot 2025-09-21 at 16 51 29" src="https://github.com/user-attachments/assets/7e0196e1-f178-4313-8d47-34ad7bf43b9e" />
 
 
