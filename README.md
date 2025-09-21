@@ -4,7 +4,7 @@
 
 ScrollCast is a comprehensive web application that allows users to aggregate RSS feeds, manage news sources, check weather information, and provides administrative capabilities for content management. Built with modern technologies for performance, scalability, and user experience.
 
-<!-- ![ScrollCast Demo](https://via.placeholder.com/800x400/2196F3/FFFFFF?text=ScrollCast+Dashboard) -->
+![ScrollCast Demo](./Screenshot%202025-09-21%20at%2015.57.45.png)
 
 ## ✨ Features
 
@@ -110,6 +110,9 @@ cd ..
 # Create .env file in project root
 echo 'DATABASE_URL="file:./prisma/my.db"' > .env
 echo 'JWT_SECRET="your-super-secret-jwt-key"' >> .env
+# Create another .env in frontend folder
+cd frotend
+echo 'VITE_BACKEND_URL="http://localhost:4000"' >> .env
 ```
 
 4. **Database setup**:
