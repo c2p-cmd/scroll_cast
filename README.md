@@ -22,6 +22,8 @@ Watch the complete application demonstration showcasing all features:
 
 **[🎬 View Full Demo on YouTube](https://youtu.be/UjMPYivrAcI)**
 
+<https://youtu.be/UjMPYivrAcI>
+
 The video demonstrates:
 
 - User authentication and registration flow
