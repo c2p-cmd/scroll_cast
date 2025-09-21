@@ -123,31 +123,22 @@ ScrollCast/
 **Problem**: Different RSS feeds have varying structures and may contain malformed XML or missing fields.
 **Solution**: Implemented robust error handling with rss-parser library and fallback mechanisms for missing fields. Added validation layers to ensure consistent data structure regardless of source feed quality.
 
-### Challenge 2: Real-time Data Updates
-
-**Problem**: Users expect fresh RSS content without manual refresh, but frequent API calls can impact performance.
-**Solution**: Implemented efficient caching strategy with time-based expiration and optimized API calls to balance performance with data freshness. Used conditional rendering to show loading states during updates.
-
-### Challenge 3: Role-based Access Control
+### Challenge 2: Role-based Access Control
 
 **Problem**: Different user types (User vs Admin) need different levels of access to features and data.
 **Solution**: Created middleware-based authentication system with JWT tokens and role-based route protection. Implemented both backend API guards and frontend route protection components.
 
-### Challenge 4: Weather Data Integration
+### Challenge 3: Weather Data Integration
 
 **Problem**: Weather APIs have rate limits and varying response formats across different providers.
-**Solution**: Designed a unified weather service layer that handles multiple data sources and implements graceful degradation when services are unavailable. Added comprehensive error handling for API failures.
+**Solution**: Consuming accuweather's weather rss feed to show weather of user's desired city.
 
-### Challenge 5: Database Performance
 
-**Problem**: Complex queries involving user favorites and feed relationships could slow down response times.
-**Solution**: Optimized database queries using Prisma's include/select patterns and implemented proper indexing. Used database connection pooling for better resource management.
-
-## �🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 ### Backend
 
-- **Runtime**: Node.js with Bun
+- **Runtime**: Bun.js
   - *Chosen for significantly faster package installation and superior JavaScript/TypeScript execution performance compared to npm/yarn*
 - **Framework**: Express.js
   - *Industry-standard, lightweight framework with extensive middleware ecosystem and proven scalability*
@@ -767,36 +758,6 @@ enum Role {
 - **Role-based Authorization**: Different access levels for users and admins
 - **CORS Protection**: Cross-origin request security
 - **Input Validation**: Request validation and sanitization
-
-## 🧪 Testing
-
-### Backend Testing
-
-```bash
-# Run all tests
-bun test
-
-# Run specific test file
-bun test backend/tests/auth.test.js
-```
-
-### Frontend Development
-
-```bash
-cd frontend
-
-# Run development server
-bun run dev
-
-# Build for production
-bun run build
-
-# Preview production build
-bun run preview
-
-# Lint code
-bun run lint
-```
 
 ## 📦 Project Scripts
 
