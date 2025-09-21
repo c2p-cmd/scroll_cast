@@ -61,28 +61,37 @@ ScrollCast/
 ### Backend
 
 - **Runtime**: Node.js with Bun
+  - *Chosen for significantly faster package installation and superior JavaScript/TypeScript execution performance compared to npm/yarn*
 - **Framework**: Express.js
+  - *Industry-standard, lightweight framework with extensive middleware ecosystem and proven scalability*
 - **Database**: SQLite with Prisma ORM
+  - *SQLite provides zero-configuration, serverless database perfect for development and small-to-medium applications. Prisma offers type-safe database access, automated migrations, and excellent developer experience*
 - **Authentication**: JWT tokens with bcrypt
+  - *Stateless authentication ideal for distributed systems, with bcrypt providing industry-standard password hashing security*
 - **RSS Processing**: rss-parser
-- **Testing**: Jest
+  - *Reliable, lightweight library specifically designed for RSS/Atom feed parsing with excellent error handling*
 
 ### Frontend
 
 - **Framework**: React 19
+  - *Latest React version with improved performance, better concurrent features, and enhanced developer experience*
 - **Build Tool**: Vite
+  - *Lightning-fast development server with hot module replacement, optimized production builds, and native ES modules support - significantly faster than traditional bundlers*
 - **UI Library**: Material-UI (MUI)
+  - *Production-ready React components following Google's Material Design principles, ensuring consistent and accessible user interfaces*
 - **HTTP Client**: Axios
+  - *Feature-rich HTTP client with request/response interceptors, automatic JSON parsing, and excellent error handling*
 - **Routing**: React Router DOM
+  - *Declarative routing solution with dynamic route matching and excellent integration with React's component lifecycle*
 - **Data Visualization**: Plotly.js
-- **Styling**: Emotion (CSS-in-JS)
+  - *Powerful, interactive charting library with extensive chart types and excellent performance for weather data visualization*
 
 ### DevOps & Tools
 
 - **Package Manager**: Bun
+  - *Up to 25x faster than npm for package installation, with built-in bundler, test runner, and superior performance*
 - **Database Migrations**: Prisma Migrate
-- **Code Quality**: ESLint
-- **Version Control**: Git
+  - *Type-safe database migrations with automatic schema generation and version control integration*
 
 ## 🚀 Quick Start
 
