@@ -10,7 +10,7 @@ ScrollCast is a comprehensive web application that allows users to aggregate RSS
 
 ---
 **Admin View:**
-<img width="1510" height="804" alt="Screenshot 2025-09-21 at 16 51 29" src="https://github.com/user-attachments/assets/7e0196e1-f178-4313-8d47-34ad7bf43b9e" />
+<img alt="Screenshot 2025-09-21 at 16 51 29" src="https://github.com/user-attachments/assets/7e0196e1-f178-4313-8d47-34ad7bf43b9e" />
 
 ---
 
