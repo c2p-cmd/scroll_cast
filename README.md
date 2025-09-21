@@ -328,6 +328,7 @@ Authorization: Bearer <jwt_token>
     "updatedAt": "2025-09-21T10:47:24.785Z",
     "createdBy": 4
 }
+```
 ---
 
 #### DELETE `/feed/current?feed_id=1`
@@ -366,6 +367,7 @@ Authorization: Bearer <jwt_token>
         "favourite": true
     },
 ]
+```
 ---
 
 #### GET `/feed/view?id=1`
@@ -386,6 +388,7 @@ Authorization: Bearer <jwt_token>
         "title": "The Best Deals Today: AirPods Pro 3, Donkey Kong Bananza, and More"
     },
 ]
+```
 ---
 
 #### GET `/feed/favourite`
@@ -414,6 +417,7 @@ Authorization: Bearer <jwt_token>
         "updatedAt": "2025-08-28T16:42:45.016Z"
     },
 ]
+```
 ---
 #### POST `/feed/favourite`
 User/Admin - Add a favorite RSS feeds sources.
@@ -437,6 +441,7 @@ Authorization: Bearer <jwt_token>
         "updatedAt": "2025-08-28T19:41:17.893Z"
     }
 }
+```
 ---
 #### DELETE `/feed/favourite`
 User/Admin - Delete a favorite RSS feeds sources.
