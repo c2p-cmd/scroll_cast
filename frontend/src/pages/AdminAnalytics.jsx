@@ -213,7 +213,7 @@ const AdminAnalytics = () => {
 
       {/* Summary Cards */}
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <Paper elevation={2} sx={{ p: 3, textAlign: "center" }}>
             <Typography variant="h3" color="primary.main" gutterBottom>
               {feedSources.length}
@@ -223,7 +223,7 @@ const AdminAnalytics = () => {
             </Typography>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <Paper elevation={2} sx={{ p: 3, textAlign: "center" }}>
             <Typography variant="h3" color="success.main" gutterBottom>
               {feedSources.filter((s) => s.favourite).length}
@@ -233,7 +233,7 @@ const AdminAnalytics = () => {
             </Typography>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <Paper elevation={2} sx={{ p: 3, textAlign: "center" }}>
             <Typography variant="h3" color="warning.main" gutterBottom>
               {feedSources.reduce(
@@ -246,7 +246,7 @@ const AdminAnalytics = () => {
             </Typography>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <Paper elevation={2} sx={{ p: 3, textAlign: "center" }}>
             <Typography variant="h3" color="info.main" gutterBottom>
               {new Set(feedSources.flatMap((s) => s.properties || [])).size}
@@ -261,7 +261,12 @@ const AdminAnalytics = () => {
       {/* Charts Grid */}
       <Grid container spacing={3}>
         {/* Feed Sources Over Time - Line Chart */}
-        <Grid item xs={12} lg={6}>
+        <Grid
+          size={{
+            xs: 12,
+            lg: 6,
+          }}
+        >
           <Card elevation={3}>
             <CardContent>
               <Typography variant="h5" gutterBottom>
@@ -303,7 +308,7 @@ const AdminAnalytics = () => {
         </Grid>
 
         {/* Properties Distribution - Pie Chart */}
-        <Grid item xs={12} lg={6}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <Card elevation={3}>
             <CardContent>
               <Typography variant="h5" gutterBottom>
@@ -359,7 +364,7 @@ const AdminAnalytics = () => {
         </Grid>
 
         {/* User Engagement - Bar Chart */}
-        <Grid item xs={12} lg={6}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <Card elevation={3}>
             <CardContent>
               <Typography variant="h5" gutterBottom>
@@ -404,7 +409,7 @@ const AdminAnalytics = () => {
         </Grid>
 
         {/* Activity Timeline - Timeline Chart */}
-        <Grid item xs={12} lg={6}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <Card elevation={3}>
             <CardContent>
               <Typography variant="h5" gutterBottom>
