@@ -23,6 +23,7 @@ import HomePage from "./pages/HomePage";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import ProtectedRoute from "./components/ProtectedRoute";
+import WeatherPage from "./pages/WeatherPage";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
@@ -64,6 +65,8 @@ function App() {
             </AdminProtectedRoute>
           }
         />
+        <Route path="/weather" element={<WeatherPage />} />
+        <Route path="*" element={<Typography>404 Not Found</Typography>} />
       </Routes>
     </div>
   );

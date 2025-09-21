@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Typography,
   Box,
@@ -33,18 +34,53 @@ const Sidebar = ({
   onSourceClick,
   isMobile,
   handleFavouriteToggle,
-}) => (
-  <Box sx={{ width: isMobile ? 250 : 280, p: 2 }}>
-    <Typography variant="h6" gutterBottom>
-      My Sources
-    </Typography>
-    {isLoadingSources ? (
-      <CircularProgress />
-    ) : (
-      <List>
-        {sources.map((source) => (
+}) => {
+  const navigate = useNavigate();
+
+  return (
+    <Box sx={{ width: isMobile ? 250 : 280, p: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        My Sources
+      </Typography>
+      {isLoadingSources ? (
+        <CircularProgress />
+      ) : (
+        <List>
+          {sources.map((source) => (
+            <ListItem
+              key={source.id}
+              disablePadding
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <ListItemButton
+                selected={selectedSource?.id === source.id}
+                onClick={() => onSourceClick(source)}
+                sx={{ flex: 1 }}
+              >
+                <ListItemText primary={source.name} />
+              </ListItemButton>
+
+              <IconButton
+                onClick={() => {
+                  // console.log("Toggling favourite for source ID:", source.id, handleFavouriteToggle);
+                  handleFavouriteToggle({
+                    id: source.id,
+                    isFavourite: source.favourite,
+                  });
+                }}
+              >
+                <StarIcon
+                  sx={{ color: source.favourite ? "yellow" : "white" }}
+                />
+              </IconButton>
+            </ListItem>
+          ))}
           <ListItem
-            key={source.id}
+            key="weather"
             disablePadding
             sx={{
               display: "flex",
@@ -53,27 +89,18 @@ const Sidebar = ({
             }}
           >
             <ListItemButton
-              selected={selectedSource?.id === source.id}
-              onClick={() => onSourceClick(source)}
+              selected={selectedSource?.id === "weather"}
+              onClick={() => navigate("/weather")}
               sx={{ flex: 1 }}
             >
-              <ListItemText primary={source.name} />
+              <ListItemText primary="Weather" />
             </ListItemButton>
-
-            <IconButton
-              onClick={() => {
-                // console.log("Toggling favourite for source ID:", source.id, handleFavouriteToggle);
-                handleFavouriteToggle({ id: source.id, isFavourite: source.favourite });
-              }}
-            >
-              <StarIcon sx={{ color: source.favourite ? "yellow" : "white" }} />
-            </IconButton>
           </ListItem>
-        ))}
-      </List>
-    )}
-  </Box>
-);
+        </List>
+      )}
+    </Box>
+  );
+};
 
 // Mobile App Bar Component
 const MobileAppBar = ({ selectedSource, onMenuToggle, theme }) => (
@@ -287,7 +314,7 @@ const ArticleDialog = ({ article, open, onClose, isMobile }) => (
           >
             Read full article
           </Link>
-          {!isMobile && (
+          {!isMobile && article.guid.startsWith("http") && (
             <Box sx={{ mt: 2, width: "100%", height: "400px" }}>
               <iframe
                 src={article.guid}
@@ -379,8 +406,8 @@ const HomePage = () => {
     try {
       console.log("Toggling favourite for source ID:", id, isFavourite);
       if (isFavourite) {
-        await axiosInstance.delete(`/feed/favourite`, { 
-          data: { feed_id: id } 
+        await axiosInstance.delete(`/feed/favourite`, {
+          data: { feed_id: id },
         });
       } else {
         await axiosInstance.post(`/feed/favourite`, { feed_id: id });
