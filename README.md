@@ -759,10 +759,6 @@ scroll_cast/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Author
-
-**Sharan Thakur** - *Initial work and development*
-
 ## 🙏 Acknowledgments
 
 - **Express.js** team for the robust backend framework
