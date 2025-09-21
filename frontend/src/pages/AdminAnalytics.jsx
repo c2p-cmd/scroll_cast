@@ -294,11 +294,20 @@ const AdminAnalytics = () => {
                 layout={{
                   autosize: true,
                   margin: { l: 40, r: 40, t: 40, b: 40 },
-                  xaxis: { title: "Month" },
-                  yaxis: { title: "Number of Feed Sources" },
+                  xaxis: {
+                    title: "Month",
+                    titlefont: { color: "white" },
+                    tickfont: { color: "white" },
+                  },
+                  yaxis: {
+                    title: "Number of Feed Sources",
+                    titlefont: { color: "white" },
+                    tickfont: { color: "white" },
+                  },
                   showlegend: false,
                   plot_bgcolor: "rgba(0,0,0,0)",
                   paper_bgcolor: "rgba(0,0,0,0)",
+                  font: { color: "white" },
                 }}
                 style={{ width: "100%", height: "300px" }}
                 config={{ displayModeBar: false, responsive: true }}
@@ -352,9 +361,15 @@ const AdminAnalytics = () => {
                   autosize: true,
                   margin: { l: 40, r: 40, t: 40, b: 40 },
                   showlegend: true,
-                  legend: { orientation: "v", x: 1.05, y: 0.5 },
+                  legend: {
+                    orientation: "v",
+                    x: 1.05,
+                    y: 0.5,
+                    font: { color: "white" },
+                  },
                   plot_bgcolor: "rgba(0,0,0,0)",
                   paper_bgcolor: "rgba(0,0,0,0)",
+                  font: { color: "white" },
                 }}
                 style={{ width: "100%", height: "300px" }}
                 config={{ displayModeBar: false, responsive: true }}
@@ -395,11 +410,20 @@ const AdminAnalytics = () => {
                 layout={{
                   autosize: true,
                   margin: { l: 100, r: 40, t: 40, b: 40 },
-                  xaxis: { title: "Number of Favorites" },
-                  yaxis: { title: "" },
+                  xaxis: {
+                    title: "Number of Favorites",
+                    titlefont: { color: "white" },
+                    tickfont: { color: "white" },
+                  },
+                  yaxis: {
+                    title: "",
+                    titlefont: { color: "white" },
+                    tickfont: { color: "white" },
+                  },
                   showlegend: false,
                   plot_bgcolor: "rgba(0,0,0,0)",
                   paper_bgcolor: "rgba(0,0,0,0)",
+                  font: { color: "white" },
                 }}
                 style={{ width: "100%", height: "300px" }}
                 config={{ displayModeBar: false, responsive: true }}
@@ -448,11 +472,18 @@ const AdminAnalytics = () => {
                   xaxis: {
                     title: "Date",
                     tickangle: -45,
+                    titlefont: { color: "white" },
+                    tickfont: { color: "white" },
                   },
-                  yaxis: { title: "Number of Additions" },
+                  yaxis: {
+                    title: "Number of Additions",
+                    titlefont: { color: "white" },
+                    tickfont: { color: "white" },
+                  },
                   showlegend: false,
                   plot_bgcolor: "rgba(0,0,0,0)",
                   paper_bgcolor: "rgba(0,0,0,0)",
+                  font: { color: "white" },
                 }}
                 style={{ width: "100%", height: "300px" }}
                 config={{ displayModeBar: false, responsive: true }}
