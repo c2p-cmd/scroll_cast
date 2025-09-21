@@ -116,6 +116,8 @@ ScrollCast/
 └── generated/        # Prisma client
 ```
 
+![ERD](./ScrollCast%20ERD%20|%20Mermaid%20Chart-2025-09-21-164411.png)
+
 ## � Technical Challenges & Solutions
 
 ### Challenge 1: RSS Feed Parsing Reliability
