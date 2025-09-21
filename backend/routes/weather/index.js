@@ -36,4 +36,18 @@ weatherRouter.get("/", async (req, res) => {
   }
 });
 
+weatherRouter.get("/cities/", async (req, res) => {
+  try {
+    const cities = await db.city.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
+    res.json(cities);
+  } catch (error) {
+    console.error("Error fetching city list:", error);
+    res.status(500).json({ error: "Failed to fetch city list" });
+  }
+});
+
 export default weatherRouter;
