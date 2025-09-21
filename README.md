@@ -146,9 +146,11 @@ bun run dev
 ### Authentication Routes
 
 #### POST `/auth/register`
+
 Register a new user.
 
 **Request Body:**
+
 ```json
 {
     "email": "mark@example.com",
@@ -158,6 +160,7 @@ Register a new user.
 ```
 
 **Response:**
+
 ```json
 {
     "message": "User registered successfully",
@@ -170,9 +173,11 @@ Register a new user.
 ---
 
 #### POST `/auth/login`
+
 User Authentication.
 
 **Request Body:**
+
 ```json
 {
     "email": "mark@example.com",
@@ -182,6 +187,7 @@ User Authentication.
 ```
 
 **Response:**
+
 ```json
 {
     "message": "Login successful for User",
@@ -194,9 +200,11 @@ User Authentication.
 ---
 
 #### POST `/auth/login`
+
 Admin Authentication.
 
 **Request Body:**
+
 ```json
 {
     "email": "admin@example.com",
@@ -206,6 +214,7 @@ Admin Authentication.
 ```
 
 **Response:**
+
 ```json
 {
     "message": "Login successful for User",
@@ -220,14 +229,17 @@ Admin Authentication.
 ### Feed Routes
 
 #### GET `/feed/current`
+
 Admin - Get all the RSS feed sources.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
 
 **Response:**
+
 ```json
 {
     "feedTitle": "Cricket news from ESPN Cricinfo.com",
@@ -264,17 +276,21 @@ Authorization: Bearer <jwt_token>
     ]
 }
 ```
+
 ---
 
 #### POST `/feed/current`
+
 Admin - Post a RSS feeds source.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
 
-**Request:** 
+**Request:**
+
 ```json
 {
     "name": "Canada Post",
@@ -284,6 +300,7 @@ Authorization: Bearer <jwt_token>
 ```
 
 **Response:**
+
 ```json
 {
     "id": 15,
@@ -301,17 +318,21 @@ Authorization: Bearer <jwt_token>
     "createdBy": 4
 }
 ```
+
 ---
 
 #### PATCH `/feed/current`
+
 Admin - Update a current RSS feed sources.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
 
 **Response:**
+
 ```json
 {
     "id": 5,
@@ -329,12 +350,15 @@ Authorization: Bearer <jwt_token>
     "createdBy": 4
 }
 ```
+
 ---
 
 #### DELETE `/feed/current?feed_id=1`
+
 Admin - Delete a current RSS feed sources.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
@@ -342,14 +366,17 @@ Authorization: Bearer <jwt_token>
 ---
 
 #### GET `/feed/current`
+
 User - Get all current RSS feed sources.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
 
 **Response:**
+
 ```json
 [
         {
@@ -368,17 +395,21 @@ Authorization: Bearer <jwt_token>
     },
 ]
 ```
+
 ---
 
 #### GET `/feed/view?id=1`
+
 User - View a RSS feeds sources.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
 
 **Response:**
+
 ```json
 [
     {
@@ -389,17 +420,21 @@ Authorization: Bearer <jwt_token>
     },
 ]
 ```
+
 ---
 
 #### GET `/feed/favourite`
+
 User/Admin - Get all favorite RSS feeds sources.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
 
 **Response:**
+
 ```json
 [
     {
@@ -418,16 +453,21 @@ Authorization: Bearer <jwt_token>
     },
 ]
 ```
+
 ---
+
 #### POST `/feed/favourite`
+
 User/Admin - Add a favorite RSS feeds sources.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
 
 **Response:**
+
 ```json
 {
     "message": "Feed added to favourites",
@@ -442,16 +482,21 @@ Authorization: Bearer <jwt_token>
     }
 }
 ```
+
 ---
+
 #### DELETE `/feed/favourite`
+
 User/Admin - Delete a favorite RSS feeds sources.
 
 **Headers:**
+
 ```
 Authorization: Bearer <jwt_token>
 ```
 
 **Request:**
+
 ```json
 {
     "feed_id": 2
@@ -463,9 +508,11 @@ Authorization: Bearer <jwt_token>
 ### Weather Routes
 
 #### GET `/weather?cityName=Mumbai`
+
 Get weather information for a specific city.
 
 **Response:**
+
 ```json
 {
     "feedTitle": "Mumbai, IN - AccuWeather.com Forecast",
@@ -493,12 +540,15 @@ Get weather information for a specific city.
     ]
 }
 ```
+
 ---
 
 #### GET `/weather/cities`
+
 Get a list of all the cities
 
 **Response:**
+
 ```json
 [
     {
@@ -518,6 +568,7 @@ Get a list of all the cities
     },
 ]
 ```
+
 ---
 
 ## 🗄️ Database Schema
